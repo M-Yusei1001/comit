@@ -1,2 +1,2 @@
 # comit
-for developing "comit"
+こみっと開発用リポジトリ
