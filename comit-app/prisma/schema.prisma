@@ -15,8 +15,8 @@ datasource db {
 
 model User {
   id        String @id @default(cuid())
-  name      String
-  email     String
+  name      String 
+  email     String @unique
   password  String
   products  Product[]
   order     Order[]
