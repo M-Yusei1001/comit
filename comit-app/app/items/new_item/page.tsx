@@ -57,8 +57,9 @@ export default function Page() {
                 <div className="w-4/5 mx-auto">
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700">商品名</label>
+                            <label className="mb-2 block text-sm font-medium text-gray-700">商品名</label>
                             <input type='text' placeholder='商品名' className='input' {...form.register("itemName")} />
+                            <p className="mt-2 text-red-500 text-xs italic">{form.formState.errors.itemName?.message}</p>
                         </div>
                     </form>
                 </div>
