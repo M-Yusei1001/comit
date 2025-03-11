@@ -5,15 +5,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
-
 const ItemSchema = z.object({
-    itemImage: z.custom<FileList>()
-        .transform((itemImage) => itemImage.files[0])
-        .refine((itemImage) => itemImage.size <= MAX_IMAGE_SIZE, {
-            message: "5MB以下の画像を設定してください"
-        })
-        .optional(),
     itemName: z.string().min(1, {
         message: "商品名は1文字以上で設定してください",
     }),
@@ -48,7 +40,8 @@ export default function Page() {
             `itemName: ${values.itemName},\n`
             + `itemPrice: ${values.itemPrice},\n`
             + `itemQuantity: ${values.itemQuantity},\n`
-            + `isSetOnly: ${values.isSetOnly}`);
+            + `isSetOnly: ${values.isSetOnly}`
+        );
     };
 
     return (
@@ -56,11 +49,38 @@ export default function Page() {
             <div className="max-w-lg mx-auto">
                 <div className="w-4/5 mx-auto">
                     <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <div className="mb-4 bg-green-500">
+                        <div className={`p-2 rounded-xl ${form.formState.errors.itemName ? 'bg-red-50' : ''}`}>
                             <label className="mb-2 block text-sm font-medium text-gray-700">商品名</label>
-                            <input type='text' placeholder='商品名' className='input' {...form.register("itemName")} />
-                            <p className="mt-2 text-red-500 text-xs italic">{form.formState.errors.itemName?.message}</p>
+                            <input type='text' className='input' {...form.register("itemName")} />
+                            <div className="h-4 mt-2">
+                                {form.formState.errors.itemName && (
+                                    <p className="text-red-500 text-xs italic">{form.formState.errors.itemName?.message}</p>
+                                )}
+                            </div>
                         </div>
+                        <div className={`p-2 rounded-xl ${form.formState.errors.itemPrice ? 'bg-red-50' : ''}`}>
+                            <label className="mb-2 block text-sm font-medium text-gray-700">価格</label>
+                            <input type='text' className='input' {...form.register("itemPrice")} />
+                            <div className="h-4">
+                                {form.formState.errors.itemPrice && (
+                                    <p className="text-red-500 text-xs italic">{form.formState.errors.itemPrice?.message}</p>
+                                )}
+                            </div>
+                        </div>
+                        <div className={`p-2 rounded-xl ${form.formState.errors.itemQuantity ? 'bg-red-50' : ''}`}>
+                            <label className="mb-2 block text-sm font-medium text-gray-700">個数</label>
+                            <input type='text' className='input' {...form.register("itemQuantity")} />
+                            <div className="h-4">
+                                {form.formState.errors.itemQuantity && (
+                                    <p className="text-red-500 text-xs italic">{form.formState.errors.itemQuantity?.message}</p>
+                                )}
+                            </div>
+                        </div>
+                        <div className='p-2 mb-4 flex items-center justify-between'>
+                            <label className="text-sm font-medium text-gray-700">セットのみで取り扱い</label>
+                            <input type='checkbox' className='toggle border-gray-300 bg-gray-300 checked:bg-blue-500 checked:text-white checked:border-blue-500 " /' {...form.register("isSetOnly")} />
+                        </div>
+
                         <div>
                             <button className='btn btn-primary' type='submit'>送信</button>
                         </div>
