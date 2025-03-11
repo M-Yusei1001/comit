@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "WATCHPACK_POLLING=true next dev",
+    "dev:turbo": "WATCHPACK_POLLING=true next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

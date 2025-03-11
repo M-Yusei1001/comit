@@ -56,10 +56,13 @@ export default function Page() {
             <div className="max-w-lg mx-auto">
                 <div className="w-4/5 mx-auto">
                     <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <div className="mb-4">
+                        <div className="mb-4 bg-green-500">
                             <label className="mb-2 block text-sm font-medium text-gray-700">商品名</label>
                             <input type='text' placeholder='商品名' className='input' {...form.register("itemName")} />
                             <p className="mt-2 text-red-500 text-xs italic">{form.formState.errors.itemName?.message}</p>
+                        </div>
+                        <div>
+                            <button className='btn btn-primary' type='submit'>送信</button>
                         </div>
                     </form>
                 </div>
